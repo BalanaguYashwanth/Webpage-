@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <style>
+            #space{
+                width:250%;
+                text-align: left;
+                color:black;
+                padding: 4%;
+            }
+            #space1{
+                padding: 7px;               
+            }
+            div.bottom{
+                position:absolute;
+                bottom:10px;
+
+            }
+
+           
+
+            .dark{
+                width:700px;
+                height:100px;
+                background-repeat: no-repeat;
+                background-size:300px 100px;
+                background-color:aqua;
+                text-decoration-line: line-through;
+       
+            }
+
+        </style>
+
+
+    
+    <script type="text/javascript" >
+
+             window.onload = function () {document.getElementById("text").onclick = function() {myFunction()};}
+
+        function change()
+        {
+            
+            var x = document.createElement("P");
+            
+            var ct=document.getElementById("space").value;
+            x.innerHTML=ct
+            var items = document.getElementById('text');
+  
+           items.innerHTML+='</br></br>'+ct;
+            
+            //document.body.appendChild(x);
+            document.getElementById("space").value = "";
+        }
+        function myFunction()
+        {
+            //document.getElementById("text").innerHTML = "YOU CLICKED ME!";
+            
+            var element=document.body;
+            element.classList.toggle("dark");
+
+        }
+        </script> 
+
+   </head>
+
+
+    <body>
+
+        <div id="text" >
+
+            <p  >hi bay</p>
+
+        </div>
+        
+
+      <div class=bottom> 
+         
+        <input id="space" type="text" placeholder="Enter the text..."    >
+        <button id="space1"  onclick="change()"  >Submit</button>
+             
+    </div>
+
+    </body>
+</html>
+
