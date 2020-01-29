@@ -1,0 +1,31 @@
+<html>
+<head>
+<script>
+var i=0;
+function change()
+{
+       
+var x = document.createElement("P");
+x.innerHTML=input1.value;
+document.getElementsByTagName("P")[i].setAttribute("id","demo"+i);
+var t=document.getElementById("demo0").value;
+document.getElementById("mydiv").innerHTML.appendChild(t);
+i=i+1;
+}
+</script>
+
+
+</head>
+<body>
+
+<input id="input1">
+<button onclick="change()"> submit </button>
+
+
+<div id="mydiv">
+
+</div>
+
+</body>
+
+</html>
