@@ -1,0 +1,134 @@
+<html>
+
+<head>
+    <style>
+        #space {
+            width: 250%;
+            text-align: left;
+            color: black;
+            padding: 4%;
+        }
+
+        #space1 {
+            padding: 7px;
+        }
+
+        div.bottom {
+            position: absolute;
+            bottom: 10px;
+
+        }
+
+
+
+        .dark {
+            width: 700px;
+            height: 100px;
+            background-repeat: no-repeat;
+            background-size: 300px 100px;
+            background-color: aqua;
+            text-decoration-line: line-through;
+
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        var xmlHttp = xmlHttpRequestobject();
+
+        function xmlHttpRequestobject() {
+            if (window.XMLHttpRequest) {
+                var xmlHttp = new XMLHttpRequest;
+
+            }
+            else {
+                alert("not support");
+            }
+
+            return xmlHttp;
+        }
+
+        function process() {
+
+            xmlHttp = new XMLHttpRequest;
+
+            xmlHttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    text = this.responseText;
+                    //tag= text.getElementsByTagName("P");
+                    var i;
+                    var txt = "";
+                    // for(i=0;i<tag.length;i++)
+                    //{
+                    //   txt = txt + tag[i].childNodes[0].nodeValue+"<br>";
+
+                    //} 
+
+
+                  //  document.getElementById("mydiv").innerHTML = text;
+
+
+                }
+            };
+            xmlHttp.open("GET", "ToDo app.html", true);
+            xmlHttp.send();
+        }
+
+
+    </script>
+    <script type="text/javascript">
+
+        //window.onload = function () { document.getElementById("text").onclick = function () { myFunction() }; }
+
+        function change() {
+
+            var x = document.createElement("P");
+         
+
+            var ct = document.getElementById("space").value;
+            x.innerHTML = ct
+            var items = document.getElementById('text');
+          
+
+            items.appendChild(x);
+
+            //document.body.appendChild(x);
+            document.getElementById("space").value = "";
+            x.onclick=myFunction(this);
+       
+        }
+        
+        function myFunction(x) {
+            //document.getElementById("text").innerHTML = "YOU CLICKED ME!";
+
+            var element = document.body;
+            element.classList.toggle("dark");
+
+        }
+    </script>
+
+</head>
+
+
+<body onload="process()">
+
+    <div id="text">
+
+        <p>hi bay</p>
+
+
+
+    </div>
+
+    <div id="userinput1">
+    </div>
+    <div class=bottom>
+
+        <input id="space" type="text" placeholder="Enter the text...">
+        <button id="space1" onclick="change()">Submit</button>
+
+    </div>
+
+</body>
+
+</html>
