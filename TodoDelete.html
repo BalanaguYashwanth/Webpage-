@@ -1,0 +1,102 @@
+<html>
+
+<head>
+    <style>
+        #space {
+            width: 250%;
+            text-align: left;
+            color: black;
+            padding: 4%;
+        }
+
+        #space1 {
+            padding: 7px;
+        }
+
+        div.bottom {
+            position: absolute;
+            bottom: 10px;
+
+        }
+
+
+
+        .dark {
+            width: 700px;
+            height: 100px;
+            background-repeat: no-repeat;
+            background-size: 300px 100px;
+            background-color: aqua;
+            text-decoration-line: line-through;
+
+        }
+</style>
+
+<script type="text/javascript">
+function process()
+{
+    xmlHttp = new XMLHttpRequest();    
+    xmlHttp.onreadystatechange= function(){
+        if(xmlHttp.readyState==4 && xmlHttp.status==200 )
+        {
+            Text = JSON.parse(xmlHttp.responseText);
+            //  var value = document.createElement("P");
+            //  value.innerHTML =Text.name;
+             document.getElementById("mydiv").innerHTML="";
+            }
+        
+    }
+
+     
+}
+
+var i=1;
+function change() {
+    var x = document.createElement("P");
+    x.innerHTML = document.getElementById("space").value;
+    x.onclick = () => { myFunction(x) };
+    var items = document.getElementById('text');
+    items.appendChild(x);
+    
+    document.getElementsByTagName("P")[i].setAttribute("type",i);
+    i=i+1;
+    document.getElementById("space").value = "";
+}
+
+function myFunction(element) {
+   var imp= element.getAttribute("type");
+   document.getElementById("new").innerHTML=imp;
+   element.classList.toggle("dark");
+   
+   xmlHttp.open("Delete","https://5e2ac93c4fdc030014e20c2a.mockapi.io/api/v1/get/"+imp,true);
+   xmlHttp.send(); 
+   document.getElementById("mydiv").innerHTML="processing...."
+}
+</script>
+
+
+</head>
+
+
+<body onload="process()">
+
+    <div id="text">
+
+        <p id="new"> hi bay</p>
+
+
+
+    </div>
+
+    <div id="mydiv">
+    </div>
+    <div class=bottom>
+
+        <input id="space" type="text" placeholder="Enter the text...">
+        <button id="space1" onclick="change()">Submit</button>
+
+    </div>
+
+</body>
+
+</html>
