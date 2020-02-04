@@ -68,7 +68,9 @@ function myFunction(element) {
     element.classList.toggle("dark");
 }
 
-function addNewItem() {
+let i=0;
+let j=0;
+                              function addNewItem() {
   var newItem = document.querySelector('.input').value;
   if (newItem != '') {
     document.querySelector('.input').value = '';
@@ -79,13 +81,26 @@ function addNewItem() {
     attr.value = 'true';
     p.setAttributeNode(attr);
     p.appendChild(document.createTextNode(newItem));
-    
     p.onclick = () => { myFunction(p) };
     div.appendChild(p);
     addEventsDragAndDrop(p);
+    document.getElementsByTagName("P")[i].setAttribute("id", i);
+    i = i + 1;
+
+var div1=document.getElementById("text");
+let p1=div1.getElementsByTagName("p");
+var docs=document.getElementById("collect");
+//document.getElementById("do").append(document.getElementById("collect").innerHTML);
+//document.getElementById("collect").innerHTML= div1.getElementsByTagName("p")[1].id;
+
+ // for( j=0;j<=p1.length;j++)
+//{
+
+  document.getElementById("collect").innerHTML+=(document.getElementsByTagName("p")[j].id);
+//} 
+j=j+1;
+
+console.log('docs');
   }
 }
-
-
-
 
