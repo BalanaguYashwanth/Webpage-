@@ -5,14 +5,14 @@ from .models import upload
 def home(request):
     if request.method=="POST":
         user=request.POST['user'];
-        image=request.POST['image'];
-        upload.objects.create(image=image,user=user);
+        image=request.FILES['image'];
+        upload.objects.create(user=user,image=image);
         files=upload.objects.all();
         return redirect('foundation');
     else:
         return render(request,'image.html')
 
 def foundation(request):
-     files=upload.objects.all();
-     return render(request,'foundation.html',{'files':files})
+    files=upload.objects.all();
+    return render(request,'foundation.html',{'files':files})
 

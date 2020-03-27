@@ -7,8 +7,9 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 # Create your models here.
 class upload(models.Model):
     user=models.CharField(max_length=100)
-    image=models.ImageField(upload_to="photos/",default='/media/photos/default.jpg')
-
+    image=models.ImageField(upload_to="photos/",default='/media/photos/default.jpg') 
+    
+    
     def save(self, *args, **kwargs):
         if not self.id:
             self.image = self.compressImage(self.image)
@@ -21,5 +22,6 @@ class upload(models.Model):
         outputIoStream.seek(0)
         image = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % image.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
         return image
+
 
 
