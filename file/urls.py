@@ -20,25 +20,36 @@ from django.conf.urls.static import static
 from django.conf.urls import url
 from todo.api import datalist,dataDetail 
 from file import views
+from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
+from  .router import router
+from rest_framework.routers import DefaultRouter,SimpleRouter
+from file.viewsets import uploadViewsets
+
+
+
+
+router = routers.SimpleRouter()
+router.register('upload',uploadViewsets)
 
 urlpatterns = [
     #path('accounts/',include('accounts.urls')),
     #url(r'^api/datalist/$',datalist.as_view(),name='datalist'),
     #url(r'^api/datalist/(?P<id>\d+)/$',dataDetail.as_view(),name='datalist'),
-    url(r'^file/',views.datalist.as_view()),
+    url(r'^file/$',views.datalist.as_view()),
+    url(r'^file/(?P<id>\d+)/$',views.datadetail.as_view()),
     
     #path('todo/',include('todo.urls')),
     #path('',include('calc.urls')),
     #path('',include('travel.urls')),
     #path('',include('todo.urls')),
     #path('',include('articles.urls')),
-    path('admin/',admin.site.urls),
-    path('',include('file.urls')),
     
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-#urlpatterns = urlpatterns+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    path('',include('file.urls')),
+    path('admin/',admin.site.urls),
+    path('api/v1/',include(router.urls))
+    
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns=format_suffix_patterns(urlpatterns)
 
