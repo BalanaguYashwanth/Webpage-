@@ -1,0 +1,43 @@
+<html>
+<head>
+<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+<script type="text/javascript">
+    function change()
+    {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var myObj = JSON.parse(this.responseText);
+            document.getElementById("pa").innerHTML = myObj.user;
+          }
+        };
+
+        var data=({
+            id:4000,
+            user:"ajaxr",
+            image:"/media/photos/IMG-2018102A004-W01_p2eB8ds.jpg"
+        });
+
+
+
+        xmlhttp.open("POST", "http://127.0.0.1:8000/api/v1/upload/");
+        //xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.setRequestHeader("Content-type","application/json");
+        xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}')
+        //xmlhttp.send("id:4000&user:ajaxr&image:/media/photos/IMG-2018102A004-W01_p2eB8ds.jpg");
+        xmlhttp.send(data);
+        //xmlhttp.send("id:3&get:get 3&name:First3 Last3&email:first3@mail.com&imageUrl:https://unsplash.it/53?image=3")
+        console.log(data);
+    }
+
+</script>
+
+</head>
+
+<body>
+<p id="pa"> datas </p>
+<input type=file id="image" >
+<br>
+<button onclick=change()> Submit </button>
+</body>
+</html>
