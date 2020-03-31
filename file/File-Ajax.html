@@ -1,0 +1,169 @@
+{% load static %}
+
+
+<html>
+
+<head>
+    <style>
+        #space {
+            width: 250%;
+            text-align: left;
+            color: black;
+            padding: 4%;
+        }
+
+        #space1 {
+            padding: 7px;
+        }
+
+        div.bottom {
+            position: absolute;
+            bottom: 10px;
+
+        }
+
+
+        .dark {
+            width: 700px;
+            height: 100px;
+            background-repeat: no-repeat;
+            background-size: 300px 100px;
+            background-color: aqua;
+            text-decoration-line: line-through;
+
+        }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+let i=190;
+    $(document).ready(function(){
+
+
+        $("#space1").click(function(e){
+            e.preventDefault();
+            
+            var x = document.createElement("P");
+            x.innerHTML = document.getElementById("space").value;
+            var att=document.createAttribute('id');
+            att.value=i;
+            x.setAttributeNode(att);
+            var btn = document.createElement("BUTTON");
+            var t = document.createTextNode("CLICK ME");
+            btn.setAttribute('id',i);
+
+            btn.appendChild(t);
+            x.appendChild(btn);
+            //btn.setAttribute("onclick", "butt");
+            
+            btn.onclick = () => { myFunction(x) };
+
+            var items = document.getElementById('mydiv');
+            items.appendChild(x);
+            //document.getElementsByTagName("P")[i].setAttribute("id",i);
+            i=i+1;
+        
+
+    $.ajax({
+        type:'POST',
+        url:'base',
+        data:{
+            name:$('#space').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+        },
+        success:function(){
+        }
+        })
+        document.getElementById("space").value = "";
+        
+        })
+
+    
+        function myFunction(element)
+        {
+
+           var t= $(element).attr('id')
+           document.getElementById(t).remove();
+            $('#t').remove();
+
+
+    //$("#myFunction()").on("click", function(){
+           
+        alert($(element).attr('id'))
+        $.ajax({
+            type:'POST',
+            url:'deleting',
+           data:{
+               id:$(element).attr('id'),
+               csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+               },
+           success:function(){
+               alert("deleted")
+           }
+       })
+
+       //})
+       }
+
+       $('button').on('click',function(){
+
+        
+            $('divmy').change(function(){
+                var e = document.getElementById("divmy");
+                document.getElementById(mydiv)=e.value
+            })
+
+        $(document).ready(function(){
+            $("button").click(function(){
+                $.ajax({ 
+                    type: "GET",
+                    url: "base",
+                    contentType: 'application/json',
+                    success: function(){  
+                        alert("got it ");
+                    },
+                    error: function(){
+                        alert("error");
+                    }
+
+                });
+            
+            });
+
+        });
+        
+       })
+    
+    
+    });
+
+    
+
+</script>
+
+
+</head>
+
+<body >
+{% csrf_token %}
+    <div id="text">
+
+        <p id="31"> hi bay</p> <button id="30">delete</button>
+
+
+    </div>
+
+    <div id="mydiv">
+    </div>
+    <div class=bottom>
+
+        <input id="space" type="text" placeholder="Enter the text...">
+        
+
+        <button id="space1">Submit</button>
+
+    </div>
+
+</body>
+
+</html>
