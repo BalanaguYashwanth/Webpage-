@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<script>
+
+function change()
+{
+    const img = document.getElementById("image").files[0];
+    if(img)
+    {
+        const reader = new FileReader();
+        console.log(img);
+        reader.addEventListener("load",function(){
+           
+            document.getElementById("preview").setAttribute("src",this.result);
+        });
+        reader.readAsDataURL(img);
+    }
+    else{
+        document.getElementById("error").innerHTML="error";
+
+    }
+}
+
+
+
+</script>
+</head>
+<body>
+    <div id="mydiv">
+    <img src="" id="preview" height="100" >    
+    </div>
+    <p id="error">hai</p>
+<input type="file" id="image">
+<br>
+<br>
+<button id="submit" onclick="change()"> submit </button>
+
+</body>
+</html>
