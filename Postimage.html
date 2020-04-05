@@ -1,0 +1,48 @@
+<html>
+<head>
+<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+<script type="text/javascript">
+
+  
+  function change()
+  {
+      const img = document.getElementById("image").files[0];
+  
+      if(img)
+      {
+          const reader = new FileReader();
+          reader.addEventListener("load",function(){
+              const photo=document.getElementById("preview");
+              document.getElementById("preview").setAttribute("src",this.result);
+              const body=JSON.stringify(this.result.split(',')[1]);
+              console.log(body);
+      var xmlhttp=new XMLHttpRequest();
+      xmlhttp.open("POST","http://127.0.0.1:8000/api/v1/upload/");
+      xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}')
+      xmlhttp.send("id:4000&user:ajaxr&image:"+body+"");
+      console.log("id:4000&user:ajaxr&image:"+body+"");
+          });
+          reader.readAsDataURL(img);
+         
+      }
+      else{
+          document.getElementById("error").innerHTML="error";
+      }
+
+      
+      
+
+  }
+</script>
+
+</head>
+
+<body>
+<input type="text" id="name">
+<input type="file" id="image" >
+<img id="preview" src="" height="300"> 
+<br>
+<button id="submit" onclick="change()"> Submit </button>
+</body>
+</html>
