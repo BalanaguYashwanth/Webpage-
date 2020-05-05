@@ -19,11 +19,11 @@
             "image":(this.result),
             "user":"yash"
             }
-               
+            
               
               var xmlhttp=new XMLHttpRequest();
               xmlhttp.onreadystatechange=function()
-              {
+              {   
                  document.getElementById("done").innerHTML= xmlhttp.responseText;
               }
                 xmlhttp.open("POST","http://127.0.0.1:8000/api/v1/upload/");
@@ -40,9 +40,10 @@
       }
 
       
+    }
       
 
-  }
+  
 </script>
 
 </head>
@@ -51,9 +52,13 @@
 <input type="text" id="name">
 <input type="file" id="image" >
 
-<img id="preview" src="" height="300"> 
 <br>
 <button id="submit" onclick="change()"> Submit </button>
+<button><a href="http://127.0.0.1:8000/utils1">Download</a></button>
 <p id="done">done</p>
+
+<img src="" id ="preview"  height="200"> 
+
 </body>
 </html>
+
