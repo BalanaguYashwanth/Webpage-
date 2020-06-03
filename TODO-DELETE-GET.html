@@ -1,0 +1,73 @@
+<html>
+<head>
+
+<script type="text/javascript">
+
+function change()
+{
+    xmlhttp= new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function()
+    {   
+        document.getElementById("mydiv").innerHTML="";
+        if(this.readyState==4 && this.status==200)
+        {      
+            var x=JSON.parse(xmlhttp.responseText);
+            for(var obj in x)
+            {
+            ptag=document.createElement("p")
+            ptag.innerHTML+=x[obj].id+"&nbsp"+x[obj].user+"&nbsp"+"&nbsp"+x[obj].phonenumber+"&nbsp";  
+            var div=document.getElementById("mydiv");
+            div.appendChild(ptag);
+
+            b=document.createElement("BUTTON");
+            b.setAttribute("onClick","todo(this.id);");
+            b.setAttribute("id",x[obj].id);
+          
+            t=document.createTextNode("delete");
+            b.appendChild(t);
+            ptag.appendChild(b);
+            }
+        }
+    }
+    xmlhttp.open("GET",'http://127.0.0.1:8000/api/v1/details/',true);
+    xmlhttp.send();
+  
+}
+
+function todo(i)
+{
+    location.reload();
+    Delete(i);
+}
+
+function Delete(i)
+{
+    console.log(i);
+    xmlhttp= new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function()
+    {   
+        document.getElementById("delete").innerHTML="";
+        if(this.readyState==4 && this.status==200)
+        {      
+            document.getElementById("delete").innerHTML=JSON.parse(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open("DELETE",'http://127.0.0.1:8000/api/v1/details/'+i,true);
+    xmlhttp.send();
+  
+}
+</script>
+
+</head>
+
+<body>
+<p> user <input type="text" id="user" placeholder="enter your name"> </p>
+<p> phonenumber <input type="number" id="phonenumber"  placeholder="enter the phonenumber"> </p>
+
+<div id="mydiv"> Null Data  </div> 
+
+<p id="delete" > delete query </p>    
+<button onclick="Delete()">delete</button>
+<button onclick="change()">Submit</button>
+</body>
+</html>
