@@ -6,7 +6,7 @@
 function change()
 {
     xmlhttp= new XMLHttpRequest();
-    xmlhttp.onreadystatechange=function()
+    xmlhttp.onreadystatechange=function()   
     {   
         document.getElementById("mydiv").innerHTML="";
         if(this.readyState==4 && this.status==200)
@@ -60,7 +60,8 @@ function Delete(i)
 
 </head>
 
-<body>
+<body  onload="change()" >
+
 <p> user <input type="text" id="user" placeholder="enter your name"> </p>
 <p> phonenumber <input type="number" id="phonenumber"  placeholder="enter the phonenumber"> </p>
 
@@ -69,5 +70,6 @@ function Delete(i)
 <p id="delete" > delete query </p>    
 <button onclick="Delete()">delete</button>
 <button onclick="change()">Submit</button>
+
 </body>
 </html>
