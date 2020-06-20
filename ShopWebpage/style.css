@@ -330,10 +330,13 @@ body {
 
 .column{
   margin-left: 40px;
+  margin-bottom: 10px;
   float: left;
   object-fit: cover;
   max-width:100%;
   width: 450px;
+  
+
   max-height: auto;
   margin-top: 50px;
   border-spacing:50px 70px;
@@ -344,7 +347,7 @@ body {
 .row{
   position:relative;
   object-fit: cover;
-  padding-bottom: 10000px;
+  
   Content:"";
   Clear:both;
   display: flex;
@@ -356,3 +359,70 @@ body {
   text-align: center;
 }
 
+
+.product1{
+  margin-top: 50px;
+  text-align: center;
+}
+
+/* Style inputs */
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* Style the container/contact section */
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+/* Create two columns that float next to eachother */
+.column1 {
+  float: left;
+  width: 50%;
+  margin-top: 6px;
+  padding: 20px;
+  height: auto;
+
+}
+
+.column2{
+  float: left;
+  width: 50%;
+  margin-top: 6px;
+  height: auto;
+  padding: 20px;
+}
+
+/* Clear floats after the columns */
+.row1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column1, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
