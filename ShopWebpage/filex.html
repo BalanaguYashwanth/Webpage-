@@ -1,0 +1,94 @@
+<html>
+<head>
+
+<link rel="stylesheet" href="static/stylex.css">
+<script type="text/javascript">
+
+function change()
+{
+    xmlhttp= new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function()
+    {
+        document.getElementById("data").innerHTML="";                                                
+
+        if(xmlhttp.readyState==4 && xmlhttp.status==200)
+          {
+            var x=JSON.parse(xmlhttp.responseText);
+            var table=document.getElementById("mytable")
+            for(var obj in x)
+            {
+                var row=table.insertRow();
+                var row=table.insertRow();
+                var cell1=row.insertCell();
+                var cell2=row.insertCell();
+                var cell3=row.insertCell();
+                var cell4=row.insertCell();
+
+                cell1.innerHTML+=x[obj].id;
+                cell2.innerHTML+=x[obj].person;
+                cell3.innerHTML+=x[obj].zone;
+                
+                var btn=document.createElement("button");
+                btn.setAttribute("onclick","todo(this.id)");
+                btn.setAttribute("id",x[obj].id);
+                btn.innerHTML="Delete";
+                cell4.appendChild(btn);
+
+            }
+        }
+    }
+    xmlhttp.open("GET","http://127.0.0.1:8000/api/v1/detailed/",true);
+    xmlhttp.send();
+}
+
+function todo(id)
+{
+    location.reload();
+    Delete(id);
+}
+
+
+function Delete(id)
+{
+    alert("the data of  " +id+"  id is deleting");
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function()
+    {
+        document.getElementById("mydelete").innerHTML=xmlhttp.reponseText;
+    }
+    xmlhttp.open("DELETE","http://127.0.0.1:8000/api/v1/Moredetail/"+id+"/",true);
+    xmlhttp.send();
+    
+}
+
+
+</script>
+</head>
+
+<body onload="change()">
+
+<div id="data">
+     HI Buddy No DATA WAS FOUND
+</div>
+
+<p id="mydelete" > this is hai </p>
+
+<div>
+   <h1 class="heading"> Backend Data</h1>
+</div>
+
+<table id="mytable">
+    <thead>
+        <tr>
+            <th>Person</th>
+            <th>Place</th>
+            <th>Zone</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+
+</table>
+
+</body>
+</html>
+
