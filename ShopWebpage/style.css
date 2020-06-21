@@ -338,7 +338,7 @@ body {
   
 
   max-height: auto;
-  margin-top: 50px;
+  margin-top: 40px;
   border-spacing:50px 70px;
   border-style: solid;
   border-color:#14181f ;
@@ -363,6 +363,19 @@ body {
 .product1{
   margin-top: 50px;
   text-align: center;
+  margin-bottom: 40px;
+}
+
+
+.product2{
+  text-align: center;
+}
+
+
+.product3{
+  margin-top: 50px;
+  text-align: center;
+
 }
 
 /* Style inputs */
@@ -424,5 +437,48 @@ input[type=submit]:hover {
   .column1, input[type=submit] {
     width: 100%;
     margin-top: 0;
+  }
+}
+
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 60px;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.form-inline button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+
+@media (max-width: 800px) {
+  .form-inline input {
+    margin: 10px 0;
+  }
+  
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

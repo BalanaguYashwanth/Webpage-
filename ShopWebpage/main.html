@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="static/style.css">
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
-<body>
+<body>  
 
 <nav>
       <div class="menu-icon">
@@ -40,19 +40,19 @@
 
 <div class="mySlides fade">
   <div class="numbertext">1 / 3</div>
-  <img src="photos/img_nature_wide.jpg" style="width:100%">
+  <img src="static/photos/img_nature_wide.jpg" style="width:100%">
   <div class="text">Caption Text</div>
 </div>
 
 <div class="mySlides fade">
   <div class="numbertext">2 / 3</div>
-  <img src="photos/img_snow_wide.jpg" style="width:100%">
+  <img src="static/photos/img_snow_wide.jpg" style="width:100%">
   <div class="text">Caption Two</div>
 </div>
 
 <div class="mySlides fade">
   <div class="numbertext">3 / 3</div>
-  <img src="photos/img_mountains_wide.jpg" style="width:100%">
+  <img src="static/photos/img_mountains_wide.jpg" style="width:100%">
   <div class="text">Caption Three</div>
 </div>
 
@@ -75,16 +75,34 @@
 <div class="row"> 
 
   <div class="column"> 
-    <img class="image" src="photos/img_mountains_wide.jpg" alt="Mountains" style="width:100%"> 
+    <img class="image" src="static/photos/img_mountains_wide.jpg" alt="Mountains" style="width:100%"> 
   </div>
    <div class="column">
-   <img class="image" src="photos/img_nature_wide.jpg" alt="Nature" style="width:100%">
+   <img class="image" src="static/photos/img_nature_wide.jpg" alt="Nature" style="width:100%">
   </div>
   <div class="column">
-   <img class="image" src="photos/img_snow_wide.jpg" alt="Snow" style="width:100%">
+   <img class="image" src="static/photos/img_snow_wide.jpg" alt="Snow" style="width:100%">
   </div>
 
 </div>
+
+<h2 class="product3">Order Now!!! </h2>
+<p class="product2">We have introduced the new order system just select the data&time and product name then we will prepare for you at that time so you can pick up the product at right time</p>
+
+<form class="form-inline" >
+  <label for="email">Name:</label>
+  <input type="email" id="email" placeholder="Enter your name" name="email">
+  <label for="pwd">Product:</label>
+  <input type="password" id="pwd" placeholder="Enter the product name " name="pswd">
+   
+  <label for="birthdaytime">Date and Time:</label>
+  <input type="datetime-local" id="birthdaytime" name="birthdaytime">
+ 
+  <label>
+    <input type="checkbox" name="remember"> Remember me
+  </label>
+  <button type="submit">Submit</button>
+</form>
 
 
 <div class="container">
@@ -94,29 +112,36 @@
   </div>
   <div class="row1">
     <div class="column1">
-      <img  src="photos/img_nature_wide.jpg" style="width:100%">
+      <img  src="static/photos/img_nature_wide.jpg" style="width:100%">
     </div>
     <div class="column1">
-      <form action="/action_page.php">
-        <label for="fname">First Name</label>
-        <input type="text" id="fname" name="firstname" placeholder="Your name..">
-        <label for="lname">Last Name</label>
-        <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-        <label for="country">Country</label>
-        <select id="country" name="country">
-          <option value="australia">Australia</option>
-          <option value="canada">Canada</option>
-          <option value="usa">USA</option>
+      <form action="data" method="POST">
+        {% csrf_token %}
+        <label for="fname">Name</label>
+        <input type="text" name="person"  placeholder="Your name.."  required>
+
+        <label for="lname">Place</label>
+        <input type="text" name="place"  placeholder="Your place name..">
+
+        <label for="lname">Zone</label>
+        <select name="zone"  placeholder="Your zone name.." required>
+         
+         <option value="">none </option>
+         <option value="red">Red </option>
+         <option value="yellow">Yellow </option>
+         <option value="green">Green</option>
+
         </select>
-        <label for="subject">Subject</label>
-        <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+        
         <input type="submit" value="Submit">
+
       </form>
+
     </div>
   </div>
 </div>
 
-<script src="main.js" > </script>
+<script src="static/main.js" > </script>
 </body>
 </html> 
 
