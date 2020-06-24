@@ -42,3 +42,56 @@ searchBtn.onclick = ()=>{
   searchBtn.classList.add("hide");
   cancelBtn.classList.add("show");
 }
+
+
+
+function orderpost()
+{
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange=function()
+  {
+    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+       document.getElementById("posting").innerHTML=xmlhttp.responseText;
+    }
+  }
+   
+  var orderdatas={
+    "name": document.getElementById("name").value,
+    "item": document.getElementById("item").value,
+    "time": document.getElementById("time").value,
+  }
+
+  xmlhttp.open("POST","http://127.0.0.1:8000/api/v1/orderdetailed/",true);
+  xmlhttp.setRequestHeader("Content-type","application/json");
+  xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+  xmlhttp.send(JSON.stringify(orderdatas));
+   
+}
+
+
+function contactpost()
+{
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange=function()
+  {
+    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+       document.getElementById("posting").innerHTML=xmlhttp.responseText;
+    }
+  }
+   
+  var contactdatas={
+    "person": document.getElementById("person").value,
+    "place": document.getElementById("place").value,
+    "phone": document.getElementById("phone").value,
+    "email": document.getElementById("email").value,
+  }
+
+  xmlhttp.open("POST","http://127.0.0.1:8000/api/v1/detailed/",true);
+  xmlhttp.setRequestHeader("Content-type","application/json");
+  xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+  xmlhttp.send(JSON.stringify(contactdatas));
+   
+}
+

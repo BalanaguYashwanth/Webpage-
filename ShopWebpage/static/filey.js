@@ -90,14 +90,14 @@ function update(id,name)
 
     var btn2=document.createElement("button");
     btn2.innerHTML="Cancel";
-    btn2.setAttribute("onclick","cancel()");
+    btn2.setAttribute("onclick","cancel("+name+")");
     cell5.appendChild(btn2);
 
 }
 
-function cancel()
+function cancel(name)
 {
-    location.reload();
+    document.getElementById("mytable").deleteRow(parseInt(name)+2);
 }
 
 function put(id,name,item,time)
