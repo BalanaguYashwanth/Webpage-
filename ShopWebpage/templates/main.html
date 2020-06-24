@@ -89,7 +89,7 @@
 <h2 class="product3">Order Now!!! </h2>
 <p class="product2">We have introduced the new order system just select the data&time and product name then we will prepare for you at that time so you can pick up the product at right time</p>
 
-<form class="form-inline"  action="order"  method="POST">
+<form class="form-inline"  method="POST" >
     {% csrf_token %}
   <label for="name">Name:</label>
   <input type="name" id="name" placeholder="Enter your name" name="name" required>
@@ -103,7 +103,7 @@
   <label>
     <input type="checkbox" name="remember"> Remember me
   </label>
-  <button type="submit">Submit</button>
+  <button onclick="orderpost()" type="submit">Submit</button>
 </form>
 
 
@@ -117,21 +117,21 @@
       <img  src="static/photos/img_nature_wide.jpg" style="width:100%">
     </div>
     <div class="column1">
-      <form action="data" method="POST">
+      <form  method="POST">
         {% csrf_token %}
         <label for="fname">Name</label>
-        <input type="text" name="person"  placeholder="Enter your name.."  required>
+        <input type="text" name="person" id="person" placeholder="Enter your name.."  required>
 
         <label for="lname">Place</label>
-        <input type="text" name="place"  placeholder="Enter your placename..">
+        <input type="text" name="place" id="place" placeholder="Enter your placename..">
 
         <label for="phone">Phonenumber</label>
-        <input type="tel" name="phone" placeholder="Enter your phonenumber | Eg:8555405725" pattern="^[0-9]{10}$" required>
+        <input type="tel" name="phone" id="phone" placeholder="Enter your phonenumber | Eg:8555405725" pattern="^[0-9]{10}$" required>
 
         <label for="email">Email</label>
-        <input type="email" name="email" placeholder="Enter your emailaddress" >
+        <input type="email" name="email" id="email" placeholder="Enter your emailaddress" >
         
-        <input type="submit" value="Submit">
+        <input type="submit" onclick="contactpost()" value="Submit">
 
       </form>
 
