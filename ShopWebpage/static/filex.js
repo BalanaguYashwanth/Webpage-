@@ -121,7 +121,11 @@ function put(id,name,place,phone,email)
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange=function()
     {
-        document.getElementById("updating").innerHTML=xmlhttp.reponseText;
+        if(xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            document.getElementById("updating").innerHTML=xmlhttp.reponseText;
+        }
+        
     }
 
     var updatedata= {
