@@ -1,37 +1,73 @@
 from django.shortcuts import render,redirect
-from .models import details
-from filex.models import orderdetails
+from django.contrib.auth.models import User,auth
+from django.contrib import messages
+from django.template import RequestContext
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
-def home(request):
-    return render(request,'main.html')
 
-def update(request,id):
-    return render(request,'update.html',{'id1':id})
-
-def data(request):
+@csrf_exempt
+def register(request):
     if request.method=="POST":
-        person=request.POST['person']
-        place=request.POST['place']
-        phone=request.POST['phone']
+        first_name=request.POST['first_name']
+        last_name=request.POST['last_name']
+        username=request.POST['username']
         email=request.POST['email']
-        details.objects.create(phone=phone,email=email,place=place,person=person)
-        all=details.objects.all()
-        return redirect(home)
+        password=request.POST['password']
+        password1=request.POST['password1']
+
+        if password==password1:
+            if User.objects.filter(username=username).exists():
+                messages.info(request,'username taken exists')
+                return redirect(register)
+            elif User.objects.filter(email=email).exists():
+                messages.info(request,"email taken exists")
+                return redirect(register)
+            else:
+                user=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
+                user.save()
+                return render(request,"loginform.html")
+        else:
+            messages.info(request," password and confirm password are not matching")
+            return redirect(register)
     else:
-        return render(request,'filex.html')
+        return render(request,'register.html')  
+
+@csrf_exempt
+def login(request):
+    if request.method=='POST':
+        
+        username=request.POST['username']
+        password=request.POST['password']
 
 
-def order(request):
-    if request.method=="POST":
-        name=request.POST['name']
-        item=request.POST['item']
-        time=request.POST['time']
-        orderdetails.objects.create(name=name,time=time,item=item)
-        collect=orderdetails.objects.all()
-        return redirect(home)
+        user=auth.authenticate(username=username,password=password)
+
+        # if request.user.is_authenticated:
+        #     return render(request,'/loginforms.html')
+        # else:
+        #     return render(request,'loginform.html')
+
+        #if request.session.has_key('username'):
+        #    username = request.session['username']
+
+        if user is not None:
+            auth.login(request,user)
+            return redirect('/forms')
+        else:
+             messages.info(request,"Invalid Login Username & Password")
+             return render(request,'loginform.html') 
+
     else:
-        return render(request,"filey.html")
-    
-# def alldata(request):
-#     return redirect(request,"filex.html")
+        return render(request,'loginform.html')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect(login)
+
+
+
+def your_view(request):
+    csrf_token = get_token(request)
+    csrf_token_html = '<input type="hidden" name="csrfmiddlewaretoken" value="{}" />'.format(csrf_token)
