@@ -1,73 +1,58 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.models import User,auth
-from django.contrib import messages
-from django.template import RequestContext
+from .models import details
+from filex.models import orderdetails
+from filex.models import *
+from django.contrib.auth.decorators import login_required
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 
 
+# Create your views here.
 @csrf_exempt
-def register(request):
-    if request.method=="POST":
-        first_name=request.POST['first_name']
-        last_name=request.POST['last_name']
-        username=request.POST['username']
-        email=request.POST['email']
-        password=request.POST['password']
-        password1=request.POST['password1']
+def home(request):
+    return render(request,'main.html')
 
-        if password==password1:
-            if User.objects.filter(username=username).exists():
-                messages.info(request,'username taken exists')
-                return redirect(register)
-            elif User.objects.filter(email=email).exists():
-                messages.info(request,"email taken exists")
-                return redirect(register)
-            else:
-                user=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
-                user.save()
-                return render(request,"loginform.html")
-        else:
-            messages.info(request," password and confirm password are not matching")
-            return redirect(register)
-    else:
-        return render(request,'register.html')  
+@login_required(login_url='acccounts/login') 
+def forms(request):
+    return render(request,'forms.html')
+    
+@login_required(login_url='acccounts/login') 
+def imageforms(request):
+    return render(request,'imageforms.html')
 
-@csrf_exempt
-def login(request):
-    if request.method=='POST':
-        
-        username=request.POST['username']
-        password=request.POST['password']
+@login_required(login_url='acccounts/login') 
+def postimage(request):
+    return render(request,'postimage.html')
 
+@login_required(login_url='acccounts/login') 
+def slidepostimage(request):
+    return render(request,'slidepostimage.html')
 
-        user=auth.authenticate(username=username,password=password)
+@login_required(login_url='acccounts/login') 
+def secondaryimages(request):
+    return render(request,'secondaryimages.html')
 
-        # if request.user.is_authenticated:
-        #     return render(request,'/loginforms.html')
-        # else:
-        #     return render(request,'loginform.html')
+@login_required(login_url='acccounts/login')
+def primaryimages(request):
+    return render(request,'primaryimages.html')
 
-        #if request.session.has_key('username'):
-        #    username = request.session['username']
+@login_required(login_url='acccounts/login')
+def slideimage(request):
+    return render(request,'fileimages.html')
 
-        if user is not None:
-            auth.login(request,user)
-            return redirect('/forms')
-        else:
-             messages.info(request,"Invalid Login Username & Password")
-             return render(request,'loginform.html') 
+@login_required(login_url='acccounts/login')
+def slideimages(request):
+    return render(request,'slideimages.html')
 
-    else:
-        return render(request,'loginform.html')
+@login_required(login_url='acccounts/login')
+def images(request):
+    return render(request,'images.html')
 
+@login_required(login_url='acccounts/login')
+def contactdatas(request):
+    return render(request,'contactdatas.html')
 
-def logout(request):
-    auth.logout(request)
-    return redirect(login)
-
-
-
-def your_view(request):
-    csrf_token = get_token(request)
-    csrf_token_html = '<input type="hidden" name="csrfmiddlewaretoken" value="{}" />'.format(csrf_token)
+@login_required(login_url='acccounts/login')
+def orderdatas(request):
+    return render(request,"orderdatas.html")
