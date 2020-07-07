@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.template import RequestContext
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import update_session_auth_hash
 
 
 @csrf_exempt
@@ -43,6 +44,7 @@ def login(request):
 
         user=auth.authenticate(username=username,password=password)
 
+        #form = PasswordChangeForm(user=request.user, data=request.POST)
         # if request.user.is_authenticated:
         #     return render(request,'/loginforms.html')
         # else:
@@ -53,7 +55,9 @@ def login(request):
 
         if user is not None:
             auth.login(request,user)
-            return redirect('/forms')
+            update_session_auth_hash(request, user.username)
+            request.session['user'] = request.POST['username']
+            return redirect('/acccounts/process')
         else:
              messages.info(request,"Invalid Login Username & Password")
              return render(request,'loginform.html') 
@@ -61,8 +65,17 @@ def login(request):
     else:
         return render(request,'loginform.html')
 
+def process(request):
+    if request.session.has_key('user'):
+        #print(request.session.get("user"))
+        return redirect('/forms')
+    else:
+        messages.info(request,"Invalid Login Username & Password")
+        return render(request,'loginform.html') 
+
 
 def logout(request):
+    del request.session['user']
     auth.logout(request)
     return redirect(login)
 
