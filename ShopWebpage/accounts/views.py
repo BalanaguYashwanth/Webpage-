@@ -1,3 +1,4 @@
+ 
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
@@ -55,9 +56,9 @@ def login(request):
 
         if user is not None:
             auth.login(request,user)
-            update_session_auth_hash(request, user.username)
-            request.session['user'] = request.POST['username']
-            return redirect('/acccounts/process')
+            # update_session_auth_hash(request, user.username)
+            # request.session['user'] = request.POST['username']
+            return redirect('/forms')
         else:
              messages.info(request,"Invalid Login Username & Password")
              return render(request,'loginform.html') 
@@ -65,17 +66,17 @@ def login(request):
     else:
         return render(request,'loginform.html')
 
-def process(request):
-    if request.session.has_key('user'):
-        #print(request.session.get("user"))
-        return redirect('/forms')
-    else:
-        messages.info(request,"Invalid Login Username & Password")
-        return render(request,'loginform.html') 
+# def process(request):
+#     if request.session.has_key('user'):
+#         #print(request.session.get("user"))
+#         return redirect('/forms')
+#     else:
+#         messages.info(request,"Invalid Login Username & Password")
+#         return render(request,'loginform.html') 
 
 
 def logout(request):
-    del request.session['user']
+    #del request.session['user']
     auth.logout(request)
     return redirect(login)
 
