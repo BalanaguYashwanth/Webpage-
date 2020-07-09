@@ -17,132 +17,143 @@ function change()
                 var cell2=row.insertCell();
                 var cell3=row.insertCell();
                 var cell4=row.insertCell();
-                var cell5=row.insertCell();
-
+             
                 cell1.innerHTML+=x[obj].id;
-                cell2.innerHTML+=x[obj].name;
-                cell3.innerHTML+=x[obj].item;
-                cell4.innerHTML+=x[obj].time;
+                cell2.innerHTML+=x[obj].sname;
 
+                var img=document.createElement("img");
+                img.setAttribute('src',x[obj].sfile);
+                img.setAttribute('width','450');
+                img.setAttribute('heigth','228');
+                cell3.appendChild(img);
+              
                 
                 var btn=document.createElement("button");
                 btn.setAttribute("onclick","todo(this.id)");
                 btn.setAttribute("id",x[obj].id);
                 btn.innerHTML="Delete";
-                cell5.appendChild(btn);
-
-                               
+                cell4.appendChild(btn);
                  var space=document.createTextNode("  ");
-                 cell5.appendChild(space);
-
-
-
+                 cell4.appendChild(space);
                 var btn=document.createElement("button");
                 btn.setAttribute("id",x[obj].id);
                 btn.setAttribute("name",obj);
                 btn.setAttribute("onclick","update(this.id,this.name)");
                 btn.innerHTML="Update";
-                cell5.appendChild(btn);
+                cell4.appendChild(btn);
 
             }
         }
     }
-    xmlhttp.open("GET","http://127.0.0.1:8000/api/v1/orderdetailed/",true);
+    xmlhttp.open("GET","http://127.0.0.1:8000/api/v1/slidedatadetailed/",true);
     xmlhttp.setRequestHeader("X-CSRFToken", csrfcookie());
     xmlhttp.send();
 }
 
 function todo(id)
 {
-    location.reload();
     Delete(id);
+    location.reload();
 }
 
-arraydatas=[];
+var array=[];
 
 function update(id,name)
 {
-    if(!arraydatas.includes(id) && arraydatas<1)
-    {
+    if(!array.includes(id) && array.length<1)
+    {   
     alert("Allow to update the values of id  "+id);
-    arraydatas.push(id);
+    array.push(id);
     var table=document.getElementById("mytable");
     var row=table.insertRow(parseInt(name)+2);
     var cell1=row.insertCell();
     var cell2=row.insertCell();
     var cell3=row.insertCell();
     var cell4=row.insertCell();
-    var cell5=row.insertCell();
     
+
     cell1.innerHTML=id;
     cell1.setAttribute("id","id1");
+
     var input = document.createElement("input");
     input.setAttribute("id","name1");
     cell2.append(input);
+
     var input = document.createElement("input");
-    input.setAttribute("id","item1");
+    input.setAttribute("type","file");
+    input.setAttribute("id","file1");
     cell3.append(input);
-    var input = document.createElement("input");
-    input.setAttribute("type","datetime-local");
-    input.setAttribute("id","time1");
-    cell4.append(input);
+    
     var btn1 = document.createElement("button");
     btn1.innerHTML="Submit";
-    btn1.setAttribute('onclick',"put('id1','name1','item1','time1')");
-    cell5.appendChild(btn1);
+    btn1.setAttribute('onclick',"put('id1','name1','file1')");
+    cell4.appendChild(btn1);
 
     var space=document.createTextNode(" ");
-    cell5.appendChild(space);
+    cell4.appendChild(space);
 
     var btn2=document.createElement("button");
     btn2.innerHTML="Cancel";
     btn2.setAttribute("onclick","cancel("+name+","+id+")");
-    cell5.appendChild(btn2);
-    
+    cell4.appendChild(btn2);
+   
     }
-
 }
+
+
 
 function cancel(name,id)
 {
-    var i = arraydatas.indexOf(id);
-    arraydatas.splice(i,1);
-    document.getElementById("mytable").deleteRow(parseInt(name)+2);
+    var i = array.indexOf(id);
+    array.splice(i, 1); 
+    document.getElementById("mytable").deleteRow(parseInt(name)+2);    
 }
 
-function put(id,name,item,time)
+
+function put(id,name,file)
 {
     var getid=document.getElementById(id).innerHTML;
     var getname = document.getElementById(name).value;
-    var getitem = document.getElementById(item).value;
-    var gettime = document.getElementById(time).value;
+    var getimage = document.getElementById(file).files[0];
 
+    if(getimage)
+      {
+          const reader = new FileReader();
+          reader.addEventListener("load",function(){
+          
+              var updatedata= {
+                    "id": getid,
+                    "sname": getname,
+                    "sfile": (this.result),
+                    }
+
+         
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange=function()
     {
         if(xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-            document.getElementById("updating").innerHTML=xmlhttp.reponseText;
+          //  document.getElementById("status").innerHTML=JSON.parse(xmlhttp.reponseText);
         }
     }
 
-    var updatedata= {
-    "id": getid,
-    "name": getname,
-    "item": getitem,
-    "time": gettime
-    }
 
-    xmlhttp.open("PUT","http://127.0.0.1:8000/api/v1/orderMoredetail/"+getid+"/",true);
+    xmlhttp.open("PUT","http://127.0.0.1:8000/api/v1/slidedataMoredetail/"+getid+"/",true);
     xmlhttp.setRequestHeader("Content-type","application/json");
     xmlhttp.setRequestHeader("X-CSRFToken", csrfcookie());
     console.log(JSON.stringify(updatedata));
     xmlhttp.send(JSON.stringify(updatedata));
     location.reload();
-  
+   })
+   reader.readAsDataURL(getimage);
+  }
+    
+ else{
+        document.getElementById("status").innerHTML="error";
+    }
+
 
 }
-
 
 function Delete(id)
 {
@@ -152,12 +163,12 @@ function Delete(id)
     {
         document.getElementById("mydelete").innerHTML=xmlhttp.reponseText;
     }
-    xmlhttp.open("DELETE","http://127.0.0.1:8000/api/v1/orderMoredetail/"+id+"/",true);
+    xmlhttp.open("DELETE","http://127.0.0.1:8000/api/v1/slidedataMoredetail/"+id+"/",true);
+    xmlhttp.setRequestHeader("Content-type","application/json");
     xmlhttp.setRequestHeader("X-CSRFToken", csrfcookie());
     xmlhttp.send();
     
 }
-
 
 var csrfcookie = function() {
     var cookieValue = null,

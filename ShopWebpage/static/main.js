@@ -64,7 +64,7 @@ function orderpost()
 
   xmlhttp.open("POST","http://127.0.0.1:8000/api/v1/orderdetailed/",true);
   xmlhttp.setRequestHeader("Content-type","application/json");
-  xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+  xmlhttp.setRequestHeader("X-CSRFToken", csrfcookie());
   xmlhttp.send(JSON.stringify(orderdatas));
    
 }
@@ -90,8 +90,111 @@ function contactpost()
 
   xmlhttp.open("POST","http://127.0.0.1:8000/api/v1/detailed/",true);
   xmlhttp.setRequestHeader("Content-type","application/json");
-  xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+  xmlhttp.setRequestHeader("X-CSRFToken", csrfcookie());
   xmlhttp.send(JSON.stringify(contactdatas));
    
 }
+
+
+
+
+
+
+function slidechange()
+{
+    xmlhttp= new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function()
+    {
+        if(xmlhttp.readyState==4 && xmlhttp.status==200)
+          {
+            var xdata=JSON.parse(xmlhttp.responseText);       
+            for(var obj in xdata)
+            {
+              var divdata = document.createElement("div");
+              divdata.setAttribute("class","mySlides fade");
+                
+              var divtext = document.createElement("div");
+               divtext.setAttribute("class","text");
+               divtext.innerHTML+= xdata[obj].sname;
+               divdata.appendChild(divtext);
+                
+                var imgslide=document.createElement("img");
+                imgslide.setAttribute('alt','slideimage');
+                imgslide.setAttribute('src',xdata[obj].sfile);
+                imgslide.setAttribute('style','width:100%');
+                divdata.appendChild(imgslide);
+                document.getElementById("slidediv").appendChild(divdata);
+
+
+                var dotspan =document.createElement("span");
+                dotspan.setAttribute('class','dot');
+                document.getElementById("dotdiv").appendChild(dotspan);   
+            }
+        }
+    }
+    xmlhttp.open("GET","http://127.0.0.1:8000/api/v1/slidedatadetailed/",true);
+    xmlhttp.setRequestHeader("Content-type","application/json");
+    xmlhttp.setRequestHeader("X-CSRFToken",csrfcookie());
+    xmlhttp.send();
+}
+
+
+function change()
+{
+    xmlhttp1= new XMLHttpRequest();
+    xmlhttp1.onreadystatechange=function()
+    {
+        if(xmlhttp1.readyState==4 && xmlhttp1.status==200)
+          {
+            var x=JSON.parse(xmlhttp1.responseText);       
+            for(var obj in x)
+            {
+              var mydiv = document.createElement("div");
+              mydiv.setAttribute("class","column");
+
+                var img=document.createElement("img");
+                img.setAttribute('class','image');
+                img.setAttribute('alt','image');
+                img.setAttribute('src',x[obj].myfile);
+                img.setAttribute('style','width:100%');
+                
+                mydiv.appendChild(img);
+                document.getElementById("row").appendChild(mydiv);
+
+            }
+        }
+    }
+    xmlhttp1.open("GET","http://127.0.0.1:8000/api/v1/filesdatadetailed/",true);
+    xmlhttp1.setRequestHeader("Content-type","application/json");
+    xmlhttp1.setRequestHeader("X-CSRFToken", csrfcookie());
+    xmlhttp1.send();
+}
+
+
+function loaddata()
+{
+  slidechange();
+  change();
+ 
+} 
+
+
+
+var csrfcookie = function() {
+  var cookieValue = null,
+      name = 'csrftoken';
+  if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+};
+
+
 

@@ -47,6 +47,7 @@ function change()
         }
     }
     xmlhttp.open("GET","http://127.0.0.1:8000/api/v1/detailed/",true);
+    xmlhttp.setRequestHeader("X-CSRFToken", csrfcookie());
     xmlhttp.send();
 }
 
@@ -57,10 +58,14 @@ function todo(id)
 }
 
 
+var arraydata=[];
 
 function update(id,name)
 {
-    alert("Allow to update the values of id  "+id);   
+    if(!arraydata.includes(id) && arraydata.length<1)
+    {
+    alert("Allow to update the values of id  "+id);  
+    arraydata.push(id); 
     var table=document.getElementById("mytable");
     var row=table.insertRow(parseInt(name)+2);
     var cell1=row.insertCell();
@@ -101,12 +106,16 @@ function update(id,name)
 
     var btn2=document.createElement("button");
     btn2.innerHTML="Cancel";
-    btn2.setAttribute('onclick',"cancel("+name+")");
+    btn2.setAttribute('onclick',"cancel("+name+","+id+")");
     cell6.appendChild(btn2);
+   
+ }
 }
 
-function cancel(name)
+function cancel(name,id)
 {
+    var i = arraydata.indexOf(id);
+    arraydata.splice(i, 1); 
     document.getElementById("mytable").deleteRow(parseInt(name)+2);
 }
 
@@ -138,7 +147,7 @@ function put(id,name,place,phone,email)
 
     xmlhttp.open("PUT","http://127.0.0.1:8000/api/v1/Moredetail/"+getid+"/",true);
     xmlhttp.setRequestHeader("Content-type","application/json");
-    xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+    xmlhttp.setRequestHeader("X-CSRFToken", csrfcookie());
     console.log(JSON.stringify(updatedata));
     xmlhttp.send(JSON.stringify(updatedata));
     location.reload();
@@ -153,10 +162,30 @@ function Delete(id)
     xmlhttp=new XMLHttpRequest();
     xmlhttp.onreadystatechange=function()
     {
-        document.getElementById("mydelete").innerHTML=xmlhttp.reponseText;
+        if(xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            //document.getElementById("mydelete").innerHTML=JSON.parse(this.reponseText);
+        }
     }
     xmlhttp.open("DELETE","http://127.0.0.1:8000/api/v1/Moredetail/"+id+"/",true);
+    xmlhttp.setRequestHeader("X-CSRFToken",  csrfcookie());
     xmlhttp.send();
     
 }
 
+
+var csrfcookie = function() {
+    var cookieValue = null,
+        name = 'csrftoken';
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
