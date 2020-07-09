@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 def home(request):
     return render(request,'main.html')
 
+
 @login_required(login_url='acccounts/login') 
 def forms(request):
     return render(request,'forms.html')
