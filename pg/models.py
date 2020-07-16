@@ -14,3 +14,7 @@ class customerdata(models.Model):
 
     def __str__(self):
         return self.name
+
+class filedata(models.Model):
+    fname=models.CharField(max_length=150)
+    picture=models.ImageField(upload_to="photos/",null=True)

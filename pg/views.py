@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .models import *
 
 def home(request):
-    return render(request,'pgdata.html')
+    return render(request,'getpgdata.html')
 
 
 def firstpage(request):
@@ -16,5 +16,5 @@ def firstpage(request):
         all=pgdata.objects.all()
         return  render(request,'middlepage.html',{"all":all})
 
-
+    
 

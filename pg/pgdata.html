@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
     <script>
-
         function change()
         {
             var xmlhttp = new XMLHttpRequest();
@@ -23,7 +21,7 @@
             xmlhttp.open("POST","http://127.0.0.1:8000/api/v3/customerdata/",true);
             xmlhttp.setRequestHeader("Content-type","application/json");
             xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
-            console.log(data);
+            console.log(JSON.stringify(data));
             xmlhttp.send(JSON.stringify(data));
         }
 
@@ -46,7 +44,6 @@
                         option.setAttribute("value",y);
                         option.innerHTML+=x[obj].pgname+"  located in  "+x[obj].location;
                         document.getElementById("person").appendChild(option);
-                        console.log(y);
                         y=y+1;
                     }
                     
@@ -56,11 +53,34 @@
             xmlhttp.send();
         }
 
-    </script>
+     /*   
+        function postimage()
+        {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange= function()
+            {
+                document.getElementById("image").innerHTML=xmlhttp.responseText;          
+            }
+            
+            posted={
+                fname:document.getElementById("name").value,
+                picture:document.getElementById("image1").value.replace('C:\\fakepath\\', "http://127.0.0.1:8000/media/photos/")
 
+            }
+
+            xmlhttp.open("POST","http://127.0.0.1:8000/api/v3/filedata/",true);
+            xmlhttp.setRequestHeader("Content-type","application/json");
+            xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+            console.log(posted);
+            xmlhttp.send(JSON.stringify(posted));
+        }
+        */
+        
+    </script>
 </head>
 <body onload="get()">
     <p id="sampledata1"> status data </p>
+
     name:<input id="name" placeholder=" enter your name">
     <br>
     <br>

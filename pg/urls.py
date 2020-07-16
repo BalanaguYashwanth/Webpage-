@@ -6,7 +6,7 @@ from .viewsets import *
 router = routers.SimpleRouter()
 router.register('pgdata',pgdataViewsets,basename="pgdata")
 router.register('customerdata',customerdataViewsets,basename="customerdata")
-
+router.register('filedata',filedataViewsets,basename="filedata")
 
 urlpatterns=[
     path('',views.home,name="home"),
