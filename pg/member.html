@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members data</title>
+</head>
+<script>
+    function change()
+    {
+       xmlhttp=new XMLHttpRequest();
+       xmlhttp.onreadystatechange = function()
+       {
+           if(xmlhttp.status==200 && xmlhttp.readyState==4)
+           {  
+           var x = JSON.parse(xmlhttp.responseText);
+           document.getElementById("message").innerHTML="";
+           console.log(document.getElementById('person').value);
+           for(var obj in x)
+           {
+               if(x[obj].pg==document.getElementById('person').value)
+               {
+                 document.getElementById("message").innerHTML+=x[obj].pg+"&nbsp &nbsp message :"+x[obj].message+"<br>";
+               }
+            
+           }
+        }
+       }
+       xmlhttp.open('GET','http://127.0.0.1:8000/api/v3/memberdata/',true);
+       xmlhttp.send();
+    }
+
+    function get()
+    {
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange =function()
+        {
+            if(xmlhttp.status==200 && xmlhttp.readyState==4)
+            {
+            
+            let x=JSON.parse(xmlhttp.responseText);
+            
+            for(let obj in (x))
+            {
+               
+                    option = document.createElement("OPTION");
+                    option.setAttribute("value",x[obj].id);
+                    option.innerHTML+=x[obj].pgname+"  located in  "+x[obj].location;
+                    document.getElementById("person").appendChild(option);
+                   
+                }
+                
+            }
+        }
+        xmlhttp.open("GET","http://127.0.0.1:8000/api/v3/pgdata/",true);
+        xmlhttp.send();
+    }
+
+
+    function posting()
+    {
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange =function()
+        {
+            if(xmlhttp.status==200 && xmlhttp.readyState==4)
+            {
+            
+             document.getElementById(status).innerHTML=JSON.parse(xmlhttp.responseText);
+
+            }
+
+        }    
+        
+        xmlhttp.open("POST",'',True);
+        xmlhttp.send();
+
+    }
+
+
+</script>
+<body onload="get()">
+
+    <p id="status"> status </p>
+    person:<select id="person" placeholder="enter your pg ">   
+    </select>
+    <br>
+    <br>
+    <button onclick="change()" > select </button>
+    <br>
+    <br>
+    message:<input id="go" placeholder="enter the message" >
+    <br>
+    <br>
+    <button> send </button>
+    
+    <p id="message"> sampledata  </p>
+</body>
+</html>
