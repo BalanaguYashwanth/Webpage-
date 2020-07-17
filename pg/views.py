@@ -2,8 +2,11 @@ from django.shortcuts import render,redirect
 from .models import *
 
 def home(request):
-    return render(request,'getpgdata.html')
+    return render(request,'member.html')
 
+
+def all(request):
+    return render(request,'all.html')
 
 def firstpage(request):
     if request.method=="POST":

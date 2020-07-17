@@ -7,9 +7,11 @@ router = routers.SimpleRouter()
 router.register('pgdata',pgdataViewsets,basename="pgdata")
 router.register('customerdata',customerdataViewsets,basename="customerdata")
 router.register('filedata',filedataViewsets,basename="filedata")
+router.register('memberdata',memberdataViewsets,basename="memberdata")
 
 urlpatterns=[
     path('',views.home,name="home"),
+    path('all',views.all,name="all"),
     path('firstpage',views.firstpage,name="firstpage"),
     path('api/v3/',include(router.urls))
 ]
