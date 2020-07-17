@@ -8,6 +8,12 @@
 <script>
     function change()
     {
+        document.getElementById("person").disabled=true;
+        document.getElementById("person").onchange = function() {
+            localStorage.setItem('selecteditem', document.getElementById("person").value);
+            }
+   
+    
        xmlhttp=new XMLHttpRequest();
        xmlhttp.onreadystatechange = function()
        {
@@ -15,14 +21,14 @@
            {  
            var x = JSON.parse(xmlhttp.responseText);
            document.getElementById("message").innerHTML="";
-           console.log(document.getElementById('person').value);
+           //console.log(localStorage.getItem('selecteditem'));
            for(var obj in x)
            {
-               if(x[obj].pg==document.getElementById('person').value)
+               if(x[obj].pg==localStorage.getItem('selecteditem'))
                {
                  document.getElementById("message").innerHTML+=x[obj].pg+"&nbsp &nbsp message :"+x[obj].message+"<br>";
+                 
                }
-            
            }
         }
        }
@@ -32,6 +38,11 @@
 
     function get()
     {
+
+        document.getElementById("person").onchange = function() {
+            localStorage.setItem('selecteditem', document.getElementById("person").value);
+            }
+   
         let xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange =function()
         {
@@ -44,7 +55,13 @@
             {
                
                     option = document.createElement("OPTION");
+                    option.setAttribute("id",x[obj].id);
                     option.setAttribute("value",x[obj].id);
+                    if(x[obj].id==localStorage.getItem('selecteditem'))
+                    {
+                        option.selected=true;
+                    }
+                    
                     option.innerHTML+=x[obj].pgname+"  located in  "+x[obj].location;
                     document.getElementById("person").appendChild(option);
                    
@@ -66,33 +83,69 @@
             {
             
              document.getElementById(status).innerHTML=JSON.parse(xmlhttp.responseText);
-
             }
-
-        }    
+        }
         
-        xmlhttp.open("POST",'',True);
-        xmlhttp.send();
+        let data={
+            message:document.getElementById("go").value,
+            pg:document.getElementById("person").value
+        }
+        
+        xmlhttp.open("POST",'http://127.0.0.1:8000/api/v3/memberdata/',true);
+        xmlhttp.setRequestHeader("Content-type","application/json");
+        xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+        console.log(JSON.stringify(data));
+        xmlhttp.send(JSON.stringify(data));
+        location.reload();
+    }
+
+    function done()
+    {
+        get();
+       change();
+        local1();
+    }
+
+    function disable()
+    {
+       
+       document.getElementById("person").disabled=true;
+    }
+
+    function reset()
+    {
+        document.getElementById("person").disabled= false;
+    }
+
+     function local1()
+    {
+        document.getElementById("person").onchange = function() {
+        localStorage.setItem('selecteditem', document.getElementById("person").value);
+        }
 
     }
 
 
+
 </script>
-<body onload="get()">
+<body onload="done()">
 
     <p id="status"> status </p>
-    person:<select id="person" placeholder="enter your pg ">   
+    person:<select id="person" placeholder="enter your pg " onchange="change()" >   
     </select>
     <br>
     <br>
-    <button onclick="change()" > select </button>
+   <button onclick="disable()"> Select </button>
+   <button onclick="reset()"> Reset </button>
     <br>
-    <br>
+    <p> ----------------Customer--View--Below------------------------- </p>
+  
     message:<input id="go" placeholder="enter the message" >
     <br>
     <br>
-    <button> send </button>
+    <button onclick="posting()"> send </button>
     
     <p id="message"> sampledata  </p>
+
 </body>
 </html>
