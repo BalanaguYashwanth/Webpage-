@@ -17,3 +17,9 @@ class filedataSerializer(serializers.ModelSerializer):
     class Meta:
         model=filedata
         fields='__all__'
+
+
+class memberdataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=memberdata
+        fields='__all__'

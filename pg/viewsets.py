@@ -25,6 +25,10 @@ class filedataViewsets(viewsets.ModelViewSet):
     serializer_class=filedataSerializer
 
 
+class memberdataViewsets(viewsets.ModelViewSet):
+    queryset=memberdata.objects.all()
+    serializer_class=memberdataSerializer
+
 
 
 
