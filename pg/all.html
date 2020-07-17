@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function getcustomerdata()
+        {
+           let xmlhttp =new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function()
+            {
+                if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {   
+                let x=JSON.parse(xmlhttp.responseText);
+                for(let obj in x)
+                {
+                    option = document.createElement("OPTION");
+                    option.setAttribute('value',x[obj].person);
+                    option.setAttribute('id',x[obj].person);
+                    option.innerHTML=x[obj].name;
+                    document.getElementById("opt").appendChild(option);                    
+                } 
+            }
+            }
+            xmlhttp.open("GET","http://127.0.0.1:8000/api/v3/customerdata/",true);
+            xmlhttp.send();
+        }
+
+
+        function complete()
+        {
+            let data =document.getElementById("opt").value;
+            console.log(data);
+          
+          let xmlhttp2 = new XMLHttpRequest();
+          xmlhttp2.onreadystatechange = function()
+          {
+            if(xmlhttp2.readyState==4 && xmlhttp2.status == 200)
+            { 
+            document.getElementById("pg").innerHTML="";  
+             let z = JSON.parse(xmlhttp2.responseText);
+             for(let obj1 in z)
+             {
+                 if(data==z[obj1].id)
+                 {
+                    document.getElementById("pg").innerHTML+="Belongs to:"+z[obj1].pgname+'<br>'; 
+                 }
+                 
+             }
+
+            }
+          }
+          xmlhttp2.open("GET","http://127.0.0.1:8000/api/v3/pgdata/",true);
+          xmlhttp2.send();
+        }
+
+
+        function combine()
+        {
+           let data =document.getElementById("opt").value;
+           console.log(data);
+           document.getElementById("message").innerHTML='';
+           document.getElementById("message").innerHTML='Updated Pg Messages :- <br>';
+
+          let xmlhttp1 = new XMLHttpRequest();
+          xmlhttp1.onreadystatechange = function()
+          {
+            if(xmlhttp1.readyState==4 && xmlhttp1.status == 200)
+            { 
+             let y = JSON.parse(xmlhttp1.responseText);
+             for(let obj in y)
+             {
+                 if(data== y[obj].pg)
+                 {
+                    document.getElementById("message").innerHTML +='<br>'+y[obj].message+'<br>';
+                 }
+             }
+            }
+          }
+          xmlhttp1.open("GET","http://127.0.0.1:8000/api/v3/memberdata/",true);
+          xmlhttp1.send();
+        }
+
+function total()
+{
+    complete();
+    combine();
+}
+
+
+function doing()
+{
+    getcustomerdata();
+}
+
+</script>
+</head>
+<body onload="doing()">
+    <select id="opt">
+    </select>
+    <button onclick='total()'> Submit  </button>
+
+    <p id="pg"> sample pg  </p>
+    <p id="message"> Pg Messages :- <br> </p>
+   
+</body>
+</html>
