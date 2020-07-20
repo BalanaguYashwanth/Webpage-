@@ -5,11 +5,13 @@ from django.template import RequestContext
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import update_session_auth_hash
-from acccounts.models import userprofile
+from acccounts.models import *
+
 
 @csrf_exempt
 def base(request):
-    pg=userprofile.objects.all()
+   # user=request.user
+    pg=userprofile.objects.get(user=request.user)
     return render(request,'member.html',{'pg':pg})
 
 
@@ -23,8 +25,7 @@ def register(request):
         password=request.POST['password']
         password1=request.POST['password1']
         pg_id=request.POST['pgopt']
-        userprofile.objects.create(pg_id=pg_id)
-
+       
         if password==password1:
             if User.objects.filter(username=username).exists():
                 messages.info(request,'username taken exists')
@@ -35,6 +36,7 @@ def register(request):
             else:
                 user=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
                 user.save()
+                userprofile.objects.create(pg_id=pg_id,user=user)
                 return render(request,"loginform.html")
         else:
             messages.info(request," password and confirm password are not matching")
