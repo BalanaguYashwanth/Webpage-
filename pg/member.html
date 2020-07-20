@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,7 +130,7 @@
 
 </script>
 <body onload="done()">
-
+    <li>  <a href="logout"  class="object">Logout</a>  </li>
     <p id="status"> status </p>
     person:<select id="person" placeholder="enter your pg " onchange="change()" >   
     </select>
@@ -147,5 +148,22 @@
     
     <p id="message"> sampledata  </p>
 
+{% if user.is_authenticated %}
+
+user:{{user.username}}
+
+{% endif %}
+
+<br>
+<br>
+
+{{pg.user}}
+
+{{pg.pg_id}}
+
+
+<br>
+
 </body>
 </html>
+
