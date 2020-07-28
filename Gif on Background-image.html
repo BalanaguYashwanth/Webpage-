@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Courier" Prime rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
+
+
+  <style type="text/css" class="init">
+    .part-2 {
+      opacity: 0;
+    }
+
+    .part-2.animated {
+      opacity: 1;
+    }
+  </style>
+  <style>
+    img:hover {
+      animation: shake 0.9s;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translate(1px, 1px) rotate(0deg);
+      }
+
+      10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+      }
+
+      20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+      }
+
+      30% {
+        transform: translate(3px, 2px) rotate(0deg);
+      }
+
+      40% {
+        transform: translate(1px, -1px) rotate(1deg);
+      }
+
+      50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+      }
+
+      60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+      }
+
+      70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+      }
+
+      80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+      }
+
+      90% {
+        transform: translate(1px, 2px) rotate(0deg);
+      }
+
+      100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+      }
+    }
+  </style>
+  <style>
+    .button {
+      //background-color: #4CAF50;
+      border: none;
+      color: white;
+      //padding: 7px 17px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 20px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+  </style>
+
+  <style>
+    body {
+      background-image:url("https://i.imgur.com/LLoz1n1.gif"), url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSj0LXQfpzeaBtQYot0FeD42RfTJr4kIsetAA&usqp=CAU");
+      background-size: 2000px;
+      filter: opacity(3) drop-shadow(0 0 0 black);
+      padding: 0;
+      margin: 0;
+      margin: 0;
+      overflow: auto;
+      color: #f1f1f1;
+    }
+  </style>
+
+
+</head>
+
+<body>
+
+
+
+  <table align="right">
+    <tr>
+      <td width="10%"></td>
+      <td width="15%"><img
+          src="data:image/jpeg;base64,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"
+          width="70" height="100">
+      </td>
+      <td width="5%"><a href="Home.html" class="button"><b><b>Home</b></b></a></td>
+      <td width="9%"> <a href="OurProducts.html" class="button"><b>Our Products </b> </a></td>
+      <td width="12%"> <a href="reverse.html" class="button"><b>RO/UF/Nano/Psf/ACF </b></a></td>
+      <td width="8%"> <a href="Contact Us.html" class="button"><b>Contact Us</b> </a></td>
+      <td width="7%"> <a href="Catalog.html" class="button"><b>Catalog</b> </a></td>
+      <td width="9%"> <a href="Our Policies.html" class="button"><b>Our Policies</b> </a></td>
+      <td width="8%"> <a href="About Us.html" class="button"><b>About Us </b></a></td>
+      </td>
+    </tr>
+  </table>
+  <BR><BR><BR><BR><BR><BR><BR><BR>
+  <center><BR><BR>
+    <div class="part-2">
+      <p>
+      <h2> WELCON EQUIPMENTS INDIA PVT LIMITED</h2>
+      </p>
+    </div>
+  </center>
+  <center>
+    <div class="part-2">
+      <p><img
+          src="https://lh3.googleusercontent.com/proxy/7ZFNzs0SFFTDMNAMpMTdWMO98N4b9hm4nIjXm1UdomwAuHrZ5QyEJmNC5SSSqXKnJmngwSGnKjwwMmmBXMEMnia77VE88gCnOo-oeX5D"
+          alt="Pineapple" width="150" height="200"></p>
+    </div>
+    <BR><BR><BR><BR><BR>
+  </center>
+  <center>W O R K I N G H O U R S :<BR>8 A M T O 8 P M</center>
+  <script src="/path/to/noframework.waypoints.min.js"></script>
+
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('.part-2').waypoint(function (direction) {
+        $('.part-2').addClass('animated fadeInUp')
+      }, {
+        offset: '50%'
+      });
+    });
+
+    var waypoint = new Waypoint({
+      element: document.getElementsByClassName('part-2'),
+      handler: function (direction) {
+        alert('I am 20px from the top of the window');
+      },
+      offset: 20
+    });
+
+
+  </script>
+  <br><br>
+  <footer
+    style="background-image: url('https://img.freepik.com/free-photo/old-grunge-cement-wall-backgrounds_34552-195.jpg?size=626&ext=jpg');">
+    <br>
+    <center>
+      <font color="white"> 2016 GAPS Industrial Inspection Services . All Rights Reserved. GAPSIIS
+    </center>
+    <br>
+  </footer>
+</body>
+
+</html>
