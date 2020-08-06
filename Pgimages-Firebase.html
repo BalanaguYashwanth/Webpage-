@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
+    <script>
+        function change() {
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                document.getElementById('status').innerHTML = this.responseText;
+            }
+            data = {
+                fname: document.getElementById('name').value,
+                picture: document.getElementById('image').files[0].name
+            }
+
+            xmlhttp.open("POST", "http://127.0.0.1:8000/api/v3/filedata/", true);
+            console.log(JSON.stringify(data));
+            xmlhttp.send(JSON.stringify(data));
+
+        }
+        var firebaseConfig = {
+            apiKey: "AIzaSyAsANFIT1V5_zmwYzRi4zJpBUXBPtEKz7Q",
+            authDomain: "test-36fdb.firebaseapp.com",
+            databaseURL: "https://test-36fdb.firebaseio.com",
+            projectId: "test-36fdb",
+            storageBucket: "test-36fdb.appspot.com",
+            messagingSenderId: "927510521637",
+            appId: "1:927510521637:web:0fcf39759dd63a27f85ccc",
+            measurementId: "G-WR0XPN63DJ"
+        };
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+       
+        
+        function change1()
+        {
+            const db = firebase.storage().ref();
+            const file = document.getElementById('image').files[0];
+            const name = document.getElementById('name').value;
+            const metadata={
+                contentType:file.type
+            }
+            const task = db.child(name).put(file,metadata);
+            alert("done");
+
+            task.then(snapshot=>snapshot.ref.getDownloadURL()).then(url=>{
+                console.log(url);
+                alert("Image upload");
+                const image2 = document.getElementById("image1");
+                image2.src=url;
+            })
+        }
+        
+    </script>
+
+
+</head>
+
+<body>
+    <p id="status"> status of the image</p>
+
+    <input type="text" id="name" placeholder="enter the name">
+    <br>
+    <br>
+    <input type="file" id="image">
+    <br>
+    <button onclick="change1()"> submit </button>
+    <br>
+    <br>
+    <img   id="image1" width="300" height="300">
+
+</body>
+
+</html>
