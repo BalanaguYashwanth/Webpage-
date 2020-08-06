@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members data</title>
+</head>
+<script>
+    var pgid={{pg.pg_id}};
+    function change() {
+       // document.getElementById("person").disabled = true;
+       // document.getElementById("person").onchange = function () {
+       //     localStorage.setItem('selecteditem', document.getElementById("person").value);
+       // }
+          
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
+                var x = JSON.parse(xmlhttp.responseText);
+                document.getElementById("message").innerHTML = "";
+                //console.log(localStorage.getItem('selecteditem'));
+                for (var obj in x) {
+                    if (x[obj].pg == pgid) {
+                        document.getElementById("message").innerHTML += x[obj].pg + "&nbsp &nbsp message :" + x[obj].message + "<br>";
+
+                    }
+                }
+            }
+        }
+        xmlhttp.open('GET', 'http://127.0.0.1:8000/api/v3/memberdata/', true);
+        xmlhttp.send();
+    }
+
+//    function get() {
+//        
+//       // document.getElementById("person").onchange = function () {
+//       //     localStorage.setItem('selecteditem', document.getElementById("person").value);
+//      // }
+//
+//        let xmlhttp = new XMLHttpRequest();
+//        xmlhttp.onreadystatechange = function () {
+//            if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
+//
+//                let x = JSON.parse(xmlhttp.responseText);
+//
+//                for (let obj in (x)) {
+//                    option = document.createElement("OPTION");
+//                    option.setAttribute("id", x[obj].id);
+//                    option.setAttribute("value", x[obj].id);
+//                    if (x[obj].id == localStorage.getItem('selecteditem')) {
+//                        option.selected = true;
+//                    }
+//
+//                    option.innerHTML += x[obj].pgname + "  located in  " + x[obj].location;
+//                    //document.getElementById("person").appendChild(option);
+//
+//                }
+//
+//            }
+//        }
+//        xmlhttp.open("GET", "http://127.0.0.1:8000/api/v3/pgdata/", true);
+//        xmlhttp.send();
+//    }
+
+
+    function posting() {
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
+
+                document.getElementById(status).innerHTML = JSON.parse(xmlhttp.responseText);
+            }
+        }
+      
+        let data = {
+            message: document.getElementById("go").value,
+            pg: pgid
+        }
+
+        xmlhttp.open("POST", 'http://127.0.0.1:8000/api/v3/memberdata/', true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+        console.log(JSON.stringify(data));
+        xmlhttp.send(JSON.stringify(data));
+        location.reload();
+    }
+
+    function done() {
+       // get();
+        change();
+       // local1();
+    }
+
+    function disable() {
+
+       // document.getElementById("person").disabled = true;
+    }
+
+    function reset() {
+       // document.getElementById("person").disabled = false;
+    }
+
+   // function local1() {
+   //     document.getElementById("person").onchange = function () {
+   //         localStorage.setItem('selecteditem', document.getElementById("person").value);
+   //     }
+//
+   // }
+</script>
+<body onload="done()">
+    <li> <a href="logout" class="object">Logout</a> </li>
+    <p id="status"> status:None </p>
+    <!-- person:<select id="person" placeholder="enter your pg " onchange="change()">
+    </select>
+    <br>
+    <br>
+    <button onclick="disable()"> Select </button>
+    <button onclick="reset()"> Reset </button> -->
+
+    <p> ----------------Owner--View--Below------------------------- </p>
+
+    message:<input id="go" placeholder="enter the message">
+    <br>
+    <br>
+    <button onclick="posting()"> send </button>
+
+    <p id="message"> sampledata </p>
+
+    <br>
+    <br>
+
+    {% if user.is_authenticated %}
+
+    user:{{user.username}}
+
+    {% endif %}
+
+    <br>
+    <br>
+
+    {{pg.user}}
+
+    {{pg.pg_id}}
+
+
+    <br>
+
+</body>
+
+</html>
