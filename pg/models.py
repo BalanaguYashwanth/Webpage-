@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-
 class pgdata(models.Model):
     pgname=models.CharField(max_length=100)
     location=models.CharField(max_length=50)
@@ -24,7 +23,14 @@ class memberdata(models.Model):
     def __str__(self):
         return self.message
 
-
 class filedata(models.Model):
     fname=models.CharField(max_length=150)
-    picture=models.ImageField(upload_to="photos/",null=True)
+    fid=models.IntegerField()
+    picture=models.FileField(upload_to="photos/",null=True)
+
+    def __str__(self):
+        return self.fname
+
+
+
+

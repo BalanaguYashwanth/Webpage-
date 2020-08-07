@@ -21,6 +21,7 @@ class customerdataViewsets(viewsets.ModelViewSet):
 
 
 class filedataViewsets(viewsets.ModelViewSet):
+   
     queryset=filedata.objects.all()
     serializer_class=filedataSerializer
 

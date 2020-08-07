@@ -12,6 +12,7 @@ router.register('memberdata',memberdataViewsets,basename="memberdata")
 urlpatterns=[
     path('',views.home,name="home"),
     path('all',views.all,name="all"),
+    path('images',views.images,name="images"),
     path('firstpage',views.firstpage,name="firstpage"),
     path('api/v3/',include(router.urls))
 ]
