@@ -6,7 +6,7 @@ from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import update_session_auth_hash
 from acccounts.models import *
-
+from projects.models import *
 
 @csrf_exempt
 def base(request):
@@ -89,6 +89,14 @@ def logout(request):
     auth.logout(request)
     return redirect(login)
 
+def images(request):
+    if request.method=="POST":
+       fname=request.POST['fname']
+       picture= request.FILES['picture']
+       fid=request.POST['fid']
+       filedata.objects.create(fname=fname,fid=fid,picture=picture) 
+       all=filedata.objects.all()
+       return redirect(base)
 
 
 def your_view(request):
