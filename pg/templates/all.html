@@ -8,7 +8,7 @@
     <script>
         function combine()
         {
-            let maindata={{all.pg_id}}           
+            let maindata={{user.allprofiles.pg_id}}           
          //  let data =document.getElementById("opt").value;
           // console.log(data);
            document.getElementById("message").innerHTML='';
@@ -35,8 +35,25 @@
             }
           }
           xmlhttp1.open("GET","http://127.0.0.1:8000/api/v3/filedata/",true);
+          xmlhttp1.setRequestHeader("X-CSRFToken",  csrfcookie());
           xmlhttp1.send();
         }
+
+        var csrfcookie = function() {
+          var cookieValue = null,
+              name = 'csrftoken';
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = cookies[i].trim();
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      };
 
 function total()
 {
@@ -55,7 +72,8 @@ function total()
      <p> 
          hey 
         {% if user.is_authenticated %}
-          <mark>  {{user.username}} </mark>  
+        {{user}}
+          <mark>  {{user.allprofiles.user}} </mark>  
         {% endif %}
          welcome to this pg
     </p>

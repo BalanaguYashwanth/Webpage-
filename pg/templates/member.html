@@ -12,7 +12,7 @@
     }
 </style>
 <script>
-    var pgid={{pg.pg_id}};
+    var pgid={{user.userprofile.pg_id}};
     function change() {
         xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
@@ -104,13 +104,22 @@
         change();
     }   
 </script>
+
 <body onload="done()">
     <li> <a href="logout" class="object">Logout</a> </li>
     <p id="status"> status:None </p>
-    <p> ----------------Owner--View--Below------------------------- </p>
+    
+    {% if user.is_authenticated %}
+
+     hey {{user.userprofile.user1}}
+   
+    {% endif %} 
+    
+    <p> <----------------Owner--View--Below-------------------------> </p>
+
     <form action="images" method="POST"  enctype='multipart/form-data'>
         {% csrf_token %}
-    <input id="val" name="fid" value="{{pg.pg_id}}" >
+    <input id="val" name="fid" value="{{user.userprofile.pg_id}}" >
     <br>
     message:<input id="go" name="fname" placeholder="enter the message">
     <br>
@@ -122,6 +131,12 @@
     </form>
     <div id="message"> sampledata </div>
     <br>
+   
+
+    <br>
+    <br>
+
+
 
 </body>
 
@@ -130,8 +145,15 @@
 
 
 
+<!-- 
+{% for obj in all  %}
 
-
+name:{{obj.fname}}
+<br>
+<img src='{{obj.picture.url}}' width="300" height="300" >
+<br>
+<br>
+{% endfor %} -->
 
 
 
