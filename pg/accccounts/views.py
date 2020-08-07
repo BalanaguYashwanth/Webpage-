@@ -10,9 +10,9 @@ from projects.models import *
 
 @csrf_exempt
 def base(request):
-   # user=request.user
-    pg=userprofile.objects.get(user=request.user)
-    return render(request,'member.html',{'pg':pg})
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return render(request,'member.html')
 
 
 @csrf_exempt
@@ -34,9 +34,9 @@ def register(request):
                 messages.info(request,"email taken exists")
                 return redirect(register)
             else:
-                user=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
-                user.save()
-                userprofile.objects.create(pg_id=pg_id,user=user)
+                user1=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
+                user1.save()
+                userprofile.objects.create(pg_id=pg_id,user1=user1)
                 return render(request,"loginform.html")
         else:
             messages.info(request," password and confirm password are not matching")
@@ -44,30 +44,19 @@ def register(request):
     else:
         return render(request,'register.html')  
 
+
 @csrf_exempt
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('base')
+
     if request.method=='POST':
-        
         username=request.POST['username']
         password=request.POST['password']
-
-
-        user=auth.authenticate(username=username,password=password)
-
-        #form = PasswordChangeForm(user=request.user, data=request.POST)
-        # if request.user.is_authenticated:
-        #     return render(request,'/loginforms.html')
-        # else:
-        #     return render(request,'loginform.html')
-
-        #if request.session.has_key('username'):
-        #    username = request.session['username']
-
-        if user is not None:
-            auth.login(request,user)
-            # update_session_auth_hash(request, user.username)
-            # request.session['user'] = request.POST['username']
-            return redirect('base')
+        user1=auth.authenticate(username=username,password=password)
+        if user1 is not None:
+            auth.login(request,user1)
+            return render(request,'member.html')
         else:
              messages.info(request,"Invalid Login Username & Password")
              return render(request,'loginform.html') 
@@ -75,17 +64,9 @@ def login(request):
     else:
         return render(request,'loginform.html')
 
-# def process(request):
-#     if request.session.has_key('user'):
-#         #print(request.session.get("user"))
-#         return redirect('/forms')
-#     else:
-#         messages.info(request,"Invalid Login Username & Password")
-#         return render(request,'loginform.html') 
 
 
 def logout(request):
-    #del request.session['user']
     auth.logout(request)
     return redirect(login)
 
