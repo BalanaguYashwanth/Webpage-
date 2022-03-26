@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- <link rel="stylesheet" href="index.css"> -->
+    <style>
+        .maindiv{
+    position: relative;
+    width: 230px;
+    height: 230px;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+.button{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+}
+
+button{
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:15px;
+    padding-right:15px;
+    color: white;
+    margin-top:50px;
+    margin:50px;
+    background-color: darkcyan;
+}
+
+.div1 {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    background: red;
+    transition: width 2s;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.div2{
+    transition-duration: 20s;
+    border-radius:50px 50px 50px 50px;
+    animation-name: example1;
+    animation-duration: 10s;
+    animation-iteration-count: 100;   
+}
+
+@keyframes example1 {
+    0%   { background-color: red; width: 65px}  
+    17%  { background-color: yellow; width: 230px;}
+    34%  { background-color: yellow; width: 65px;}
+    51%  { background-color: darkcyan; width: 230px;}
+    68% { background-color: darkcyan; width: 65px;}
+    85% { background-color: green; width: 230px;}
+}
+
+
+.div3 {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    background: green;
+    transition: width 2s;
+    border-radius: 50%;
+    bottom: 1px;
+    
+}
+
+.div4{
+ 
+    border-radius:50px 50px 50px 50px;
+     animation-name: example2; 
+    animation-duration: 10s;
+    animation-iteration-count: 100;    
+}
+
+@keyframes example2 {
+    0%   { background-color: green; height: 65px;}
+    17%  { background-color: red; height: 230px;}
+    34%  { background-color: red; height: 65px;}
+    51%  { background-color: yellow; height: 230px;}
+    68% { background-color: yellow; height: 65px;}
+    85% { background-color: darkcyan; height: 230px;}
+
+}
+
+.div5 {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    background: yellow;
+    transition: width 2s;
+    border-radius: 50%;
+    right: 1px;
+    z-index: 2
+}
+
+
+.div6{
+    
+    transition-duration: 20s;
+    border-radius:50px 50px 50px 50px;
+     animation-name: example3; 
+    animation-duration: 10s;
+    animation-iteration-count: 100;    
+}
+
+
+@keyframes example3 {
+
+    0%   { background-color: yellow; height: 65px;}
+    17%  { background-color: cyan; height: 230px;}
+    34%  { background-color: cyan; height: 65px;}
+    51%  { background-color: green; height: 230px;}
+    68% {tbackground-color: green; height: 65px;}
+    85% { background-color: red; height: 230px;}
+
+}
+
+
+.div7 {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    background: darkcyan;
+    transition: width 2s;
+    border-radius: 50%;
+    right: 1px;
+    bottom:0;
+    right:0;   
+}
+
+
+.div8{
+    transition-duration: 20s;
+    border-radius:50px 50px 50px 50px;
+    animation-name: example4; 
+    animation-duration: 10s;
+    animation-iteration-count: 100;    
+}
+
+
+@keyframes example4 {
+    
+    0%   { background-color: cyan; width: 65px;}
+    17%  { background-color: green; width: 230px;}
+    34%  { background-color: green; width: 65px;}
+    51%  { background-color: red; width: 230px;}
+    68% { background-color: red; width: 65px;}
+    85% { background-color: yellow; width: 230px;}
+
+}
+
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function submit(){
+            let div1=document.querySelector(".div1")
+            div1.classList.add("div2")
+            let div3=document.querySelector(".div3")
+            div3.classList.add("div4")
+            let div5=document.querySelector(".div5")
+            div5.classList.add("div6")
+            let div7=document.querySelector(".div7")
+            div7.classList.add("div8")
+        }
+        function stop()
+        {
+            let div1=document.querySelector(".div1")
+            div1.classList.remove("div2")
+            let div3=document.querySelector(".div3")
+            div3.classList.remove("div4")
+            let div5=document.querySelector(".div5")
+            div5.classList.remove("div6")
+            let div7=document.querySelector(".div7")
+            div7.classList.remove("div8")
+        }
+    </script>
+</head>
+
+<body>
+    <div  class="maindiv">
+            <div class="div1">  
+            </div>
+        
+            <div class="div3">
+            </div>
+
+            <div class="div5">
+            </div>
+
+            <div class="div7">
+            </div>
+    </div>
+    <div class="button">
+        <button  onClick=submit()> Start </button>
+        <button onClick=stop()> Stop </button>
+    </div>
+
+    
+</body>
+</html>
+
+<!-- style="text-align: center; width: 100px; margin: 0 auto; position" -->
